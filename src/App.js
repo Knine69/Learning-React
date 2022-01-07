@@ -23,10 +23,15 @@ function App() {
       date: new Date(),
     },
   ];
+
+  const newExpenseHandler = (expenseData) => {
+    console.log("Inside ExpenseHandler", expenseData);
+  };
+
   return (
     <div className="App">
       <div className="expenses">
-        <NewExpense />
+        <NewExpense addNewExpense={newExpenseHandler} />
         <ExpensesList expenses={expenses} />
       </div>
     </div>

@@ -1,15 +1,18 @@
-import States from "../../States/StatesConstants";
+import { useState } from "react";
 import "./ExpenseForm.css";
 
 /*Preferable to use variables for each useState*/
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // const [userInput, setUserInput] = useState({
   //   enteredTitle: "",
   //   enteredNumber: "",
   //   enteredDate: "",
   // });
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredNumber, setEnteredNumber] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
   const titleChangeHandler = (Event) => {
-    States.setEnteredTitle(Event.target.value);
+    setEnteredTitle(Event.target.value);
     // If using Object, better do so like this
     // setUserInput((prevStatus) => {
     //   return {
@@ -19,30 +22,49 @@ const ExpenseForm = () => {
   };
 
   const numberChangeHandler = (Event) => {
-    States.setEnteredNumber(Event.target.value);
+    setEnteredNumber(Event.target.value);
     // setUserInput({
     //   ...userInput,
     //   enteredNumber: Event.target.value,
     // });
   };
   const dateChangeHandler = (Event) => {
-    States.setEnteredDate(Event.target.value);
+    setEnteredDate(Event.target.value);
     // setUserInput({
     //   ...userInput,
     //   enteredDate: Event.target.value,
     // });
   };
+
+  const submitHandler = (Event) => {
+    Event.preventDefault();
+    const expenseData = {
+      title: enteredTitle,
+      number: enteredNumber,
+      date: new Date(enteredDate),
+    };
+    props.onFormSubmit(expenseData);
+    setEnteredTitle("");
+    setEnteredNumber("");
+    setEnteredDate("");
+  };
+
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
         </div>
       </div>
       <div className="new-expense__control">
         <label>Number</label>
         <input
+          value={enteredNumber}
           type="number"
           min="0.01"
           step="0.01"
@@ -51,7 +73,7 @@ const ExpenseForm = () => {
       </div>
       <div className="new-expense__control">
         <label>Date</label>
-        <input type="date" onChange={dateChangeHandler} />
+        <input type="date" value={enteredDate} onChange={dateChangeHandler} />
       </div>
       <div className="new-expense__actions">
         <button type="submit">Add expense</button>
