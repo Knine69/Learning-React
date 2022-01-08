@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 const NewExpense = (props) => {
@@ -8,11 +9,21 @@ const NewExpense = (props) => {
     };
     props.addNewExpense(expenseData);
   };
-  return (
-    <div className="new-expense">
-      <ExpenseForm onFormSubmit={formSubmitHandler} />
-    </div>
-  );
+  const [showForm, setShowForm] = useState(false);
+
+  const formToggle = () => {
+    setShowForm(!showForm);
+  };
+
+  let buttonOp = <button onClick={formToggle}>Add New Expense</button>;
+
+  if (showForm) {
+    buttonOp = (
+      <ExpenseForm onFormSubmit={formSubmitHandler} toggleForm={formToggle} />
+    );
+  }
+
+  return <div className="new-expense">{buttonOp}</div>;
 };
 
 export default NewExpense;

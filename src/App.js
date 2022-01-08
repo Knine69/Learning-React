@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import ExpensesList from "./components/Expenses/ExpensesList";
-import "./components/Expenses/ExpensesList.css";
+import ExpensesList from "./components/Expenses/Expenses";
+import "./components/Expenses/Expenses.css";
 import NewExpense from "./components/NewExpense/NewExpense";
 const expenses = [
   {
